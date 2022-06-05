@@ -8,19 +8,20 @@ public class Car : MonoBehaviour
 
     public float maxMotorTorque; // maximum torque the motor can apply to wheel
     public float maxSteeringAngle; // maximum steer angle the wheel can have
+    public float motor;
+    public float steering;
+
+    public int multiplier = 1;
 
     // Start is called before the first frame update
-    void Start()
-    {
 
-
-    }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        float motor = maxMotorTorque * Input.GetAxis("Vertical");
-        float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
+        // motor = maxMotorTorque * Input.GetAxis("Vertical");
+        motor = maxMotorTorque * multiplier;
+        // steering = maxSteeringAngle * Input.GetAxis("Horizontal");
 
         foreach (AxleInfo axleInfo in axleInfos)
         {
@@ -34,28 +35,27 @@ public class Car : MonoBehaviour
                 axleInfo.leftWheel.motorTorque = motor;
                 axleInfo.rightWheel.motorTorque = motor;
             }
-            ApplyLocalPositionToVisuals(axleInfo.leftWheel);
-            ApplyLocalPositionToVisuals(axleInfo.rightWheel);
+
 
         }
     }
 
-    public void ApplyLocalPositionToVisuals(WheelCollider collider)
+
+    void OnCollisionEnter(Collision collision)
     {
-        if (collider.transform.childCount == 0)
+        foreach (ContactPoint contact in collision.contacts)
         {
-            return;
+            if (contact.otherCollider.name == "Car  5")
+            {
+                print(contact.thisCollider.name + " hit " + contact.otherCollider.name);
+                contact.otherCollider;
+            }
+
         }
 
-        Transform visualWheel = collider.transform.GetChild(0);
-
-        Vector3 position;
-        Quaternion rotation;
-        collider.GetWorldPose(out position, out rotation);
-
-        visualWheel.transform.position = position;
-        visualWheel.transform.rotation = rotation;
     }
+
+
 }
 
 [System.Serializable]
