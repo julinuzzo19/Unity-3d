@@ -10,12 +10,13 @@ public class LightOn : MonoBehaviour
 
 
     public Car CarStopped;
+    public GameObject car;
     // Start is called before the first frame update
     void Start()
     {
 
         lightRed.enabled = !lightRed.enabled;
-        StartCoroutine(ExecuteAfterTime());
+        //StartCoroutine(ExecuteAfterTime());
     }
 
     // Update is called once per frame
@@ -30,6 +31,6 @@ public class LightOn : MonoBehaviour
 
         // Code to execute after the delay
         lightRed.enabled = !lightRed.enabled;
-        CarStopped.multiplier = 0;
+        CarStopped.speed = 0;
     }
 }

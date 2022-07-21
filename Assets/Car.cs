@@ -4,56 +4,40 @@ using UnityEngine;
 
 public class Car : MonoBehaviour
 {
-    public List<AxleInfo> axleInfos; // the information about each individual axle
 
-    public float maxMotorTorque; // maximum torque the motor can apply to wheel
-    public float maxSteeringAngle; // maximum steer angle the wheel can have
-    public float motor;
-    public float steering;
-
-    public int multiplier = 1;
-
+    public bool choque = false;
+    
+    public float speed =5f;
+    
     // Start is called before the first frame update
-
+  
+    private void Start()
+    {
+        
+    }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        // motor = maxMotorTorque * Input.GetAxis("Vertical");
-        motor = maxMotorTorque * multiplier;
-        // steering = maxSteeringAngle * Input.GetAxis("Horizontal");
-
-        foreach (AxleInfo axleInfo in axleInfos)
+        if (!choque)
         {
-            if (axleInfo.steering)
-            {
-                axleInfo.leftWheel.steerAngle = steering;
-                axleInfo.rightWheel.steerAngle = steering;
-            }
-            if (axleInfo.motor)
-            {
-                axleInfo.leftWheel.motorTorque = motor;
-                axleInfo.rightWheel.motorTorque = motor;
-            }
-
-
+            transform.Translate(speed * Time.deltaTime * Vector3.forward);
         }
     }
-
 
     void OnCollisionEnter(Collision collision)
     {
-        foreach (ContactPoint contact in collision.contacts)
+        switch (collision.gameObject.name)
         {
-            if (contact.otherCollider.name == "Car  5")
-            {
-                print(contact.thisCollider.name + " hit " + contact.otherCollider.name);
-                contact.otherCollider;
-            }
-
+           case "Car1": choque = true; break;
+           case "Car2": choque = true; break;
+           case "Car3": choque = true; break;
+           case "Car4": choque = true; break;
+           case "Car5": choque = true; break;
+           case "Car6": choque = true; break;
         }
-
     }
+
 
 
 }
